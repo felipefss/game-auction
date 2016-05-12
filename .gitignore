@@ -3,6 +3,7 @@
 # IntelliJ project files
 .idea
 *.iml
+*.log
 node_modules
 bower_components
 # Created by .ignore support plugin (hsz.mobi)
