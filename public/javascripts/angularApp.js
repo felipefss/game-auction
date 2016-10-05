@@ -1,12 +1,13 @@
 'use strict';
 
 var app = angular.module('gameAuction', [
+    'btford.socket-io',
     'myApp.controllers',
     'myApp.directives',
     'ngRoute'
 ]);
 
-app.config(['$routeProvider', ($routeProvider) => {
+app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl: '/partials/login.html',
@@ -18,3 +19,7 @@ app.config(['$routeProvider', ($routeProvider) => {
         })
         .otherwise('/');
 }]);
+
+app.factory('socket', function(socketFactory) {
+    return socketFactory();
+});

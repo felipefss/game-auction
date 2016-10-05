@@ -3,6 +3,47 @@
         <h3 class="text-center">Current Auction</h3>
     </div> <!-- /.panel-heading -->
     <div class="panel-body">
-        No auction at the moment
+        <p ng-if="!activeAuction">No auction at the moment</p>
+        <div ng-if="activeAuction">
+            <table class="table table-condensed">
+                <tr>
+                    <td colspan="2">
+                        <h4>Seller: <strong>{{seller}}</strong></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="thumbnail alert-success">
+                            <img ng-src="/images/{{itemName}}.png" class="img-thumbnail">
+                            <div class="caption">{{itemName}}</div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        Quantity
+                        <h4><strong>{{quantity}}</strong></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4>Time Left: <strong>{{timeLeft}}</strong></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4><span ng-if="!winningBid">Minimum</span>
+                            <span ng-if="winningBid">Winning</span> Bid: <strong>{{minBid}}</strong></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-center" ng-hide="player === seller">
+                            <input id="winBid" type="number" class="form-control">
+                            <button type="button" class="btn btn-primary" ng-click="placeBid()">
+                                Place Bid</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div> <!-- /ng-if -->
     </div> <!-- /.panel-body -->
 </div> <!-- /.panel-info -->

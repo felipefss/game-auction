@@ -2,7 +2,7 @@
 
 var app = angular.module('myApp.directives', []);
 
-app.directive('playerStats', () => {
+app.directive('playerStats', function() {
     return {
         restrict: 'E',
         templateUrl: '/partials/playerStats.html',
@@ -10,7 +10,7 @@ app.directive('playerStats', () => {
     };
 });
 
-app.directive('inventory', () => {
+app.directive('inventory', function() {
     return {
         restrict: 'E',
         templateUrl: '/partials/inventory.html',
@@ -18,7 +18,7 @@ app.directive('inventory', () => {
     };
 });
 
-app.directive('currentAuction', () => {
+app.directive('currentAuction', function() {
     return {
         restrict: 'E',
         templateUrl: '/partials/auction.html',
