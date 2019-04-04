@@ -3,11 +3,11 @@ const assert = require('assert').strict;
 
 const url = 'mongodb://localhost:27017';
 const dbName = 'local';
-const client = MongoClient(url, { useNewUrlParser: true });
 
-function createUser(name) {
+function createUser(name, sessionId) {
     const playerData = {
         name,
+        sessionId,
         coins: 1000,
         inventory: {
             breads: 30,
@@ -32,6 +32,7 @@ function updateUser(name, data) {
  * @param {Object} payload - A JSON object with the data to be inserted
  */
 async function _newEntry(collection, payload) {
+    const client = new MongoClient(url, { useNewUrlParser: true });
     try {
         await client.connect();
         const db = client.db(dbName);
@@ -52,6 +53,7 @@ async function _newEntry(collection, payload) {
  * @param {Object} payload - The object to retrieve
  */
 async function _get(collection, payload) {
+    const client = new MongoClient(url, { useNewUrlParser: true });
     try {
         await client.connect();
         const db = client.db(dbName);
@@ -73,6 +75,7 @@ async function _get(collection, payload) {
  * @param {Object} payload - JSON ojbect with data to be updated
  */
 async function _updateEntry(collection, query, payload) {
+    const client = new MongoClient(url, { useNewUrlParser: true });
     try {
         await client.connect();
         const db = client.db(dbName);

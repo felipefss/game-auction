@@ -7,7 +7,9 @@
         var loginCtrl = this;
 
         loginCtrl.submitForm = function() {
-            UserService.login(loginCtrl.username);
+            UserService.login(loginCtrl.username).then(function(res) {
+                console.log(res);
+            });
         };
     }
 })();

@@ -8,10 +8,12 @@
     function UserService($http) {
         var svc = this;
 
-        svc.login = function (username) {
-            $http.post('/login', username)
+        svc.login = function (userName) {
+            return $http.post('/login', { user: userName })
                 .then(function (response) {
                     return response.data;
+                }).catch(function(reason) {
+                    console.error(reason);
                 });
         };
     }

@@ -3,7 +3,6 @@ const app = express();
 const server = require('http').Server(app);
 const port = 3000;
 const routes = require('./src/routes');
-const db = require('./src/db');
 
 app.use(express.static('../client'));
 

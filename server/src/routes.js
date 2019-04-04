@@ -1,47 +1,57 @@
+const bodyParser = require('body-parser');
+const db = require('./db');
 const router = require('express').Router();
 const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
+// const MongoDBStore = require('connect-mongodb-session')(session);
 
-const store = new MongoDBStore({
-    uri: 'mongodb://localhost:27017',
-    databaseName: 'local',
-    collection: 'sessions'
-});
+// const store = new MongoDBStore({
+//     uri: 'mongodb://localhost:27017',
+//     databaseName: 'local',
+//     collection: 'sessions'
+// });
 
-// Catch errors
-store.on('error', function (error) {
-    console.error(error);
-});
+// // Catch errors
+// store.on('error', function (error) {
+//     console.error(error);
+// });
 
+/**
+ * Returns true if current session ID matches stored session ID; false otherwise.
+ * @param {Object} user - User object stored in DB
+ * @param {String} currentSession - Current session ID
+ */
+function isValidSession(user, currentSession) {
+    return user.sessionId == currentSession;
+}
+
+router.use(bodyParser.json());
 router.use(session({
     secret: 'speaknoevil',
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
     },
-    store: store,
+    // store: store,
     resave: true,
     saveUninitialized: true
 }));
 
 // TODO: passar a SessionID em todo REST.
 // Se tiver sido destroyed, ir pra tela de login
-router.get('/', function (req, res) {
-    // store.get(req.sessionID, (err, sess) => {
-    //     if (err) throw err;
+router.post('/login', async (req, res) => {
+    const userName = req.body.user;
 
-    //     if (sess) {
-    //         req.session.destroy(err => {
-    //             if (err) throw err;
-    //             res.send('Session destroyed');
-    //         });
-    //     } else {
-    //         res.send('Hello ' + JSON.stringify(req.sessionID));
-    //     }
-    // });
-});
-
-router.post('/login', (req, res) => {
-    console.log(`session: ${req.sessionID}`);
+    try {
+        let user = await db.getUser(userName);
+        if (!user) {
+            await db.createUser(userName, req.sessionID);
+        } else {
+            await db.updateUser(userName, { sessionId: req.sessionID });
+            // user.sessionId = req.sessionID;
+        }
+        res.sendStatus(200);
+    } catch (e) {
+        res.sendStatus(500);
+    }
 });
 
 module.exports = router;
