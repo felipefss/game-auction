@@ -18,6 +18,7 @@
                         </div> <!-- .form-group -->
                         <button type="button" class="btn btn-primary btn-block" ng-click="loginCtrl.submitForm()" ng-disabled="loginForm.$invalid">Enter</button>
                     </form>
+                    <div class="alert alert-danger" role="alert" ng-if="loginCtrl.error">Something weird happened. Reload the page and try again!</div>
                 </div> <!-- .panel-body -->
             </div> <!-- .panel -->
         </div> <!-- .col -->

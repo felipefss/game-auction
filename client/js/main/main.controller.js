@@ -6,6 +6,6 @@
 
     GameController.$inject = [];
     function GameController() {
-
+        var gameCtrl = this;
     }
 })();

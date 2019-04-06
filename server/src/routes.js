@@ -46,7 +46,6 @@ router.post('/login', async (req, res) => {
             await db.createUser(userName, req.sessionID);
         } else {
             await db.updateUser(userName, { sessionId: req.sessionID });
-            // user.sessionId = req.sessionID;
         }
         res.sendStatus(200);
     } catch (e) {
