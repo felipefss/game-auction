@@ -11,7 +11,7 @@
             UserService.login(loginCtrl.username)
                 .then(function (res) {
                     if (res === 200) {
-                        $location.path('/main');
+                        $location.path('/main/' + loginCtrl.username);
                     } else {
                         loginCtrl.error = true;
                     }

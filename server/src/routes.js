@@ -45,12 +45,20 @@ router.post('/login', async (req, res) => {
         if (!user) {
             await db.createUser(userName, req.sessionID);
         } else {
-            await db.updateUser(userName, { sessionId: req.sessionID });
+            req.session.regenerate(err => {
+                db.updateUser(userName, { sessionId: req.sessionID });
+            });
         }
         res.sendStatus(200);
     } catch (e) {
         res.sendStatus(500);
     }
+});
+
+router.get('/getUser/:userId', (req, res) => {
+    db.getUser(req.params.userId)
+        .then(user => res.send(user))
+        .catch(() => res.sendStatus(500));
 });
 
 module.exports = router;

@@ -14,10 +14,15 @@
                 controllerAs: 'loginCtrl'
             })
             .state('/main', {
-                url: '/main/{user}',
+                url: '/main/{username}',
                 templateUrl: 'js/main/main.html',
                 controller: 'MainController',
-                controllerAs: 'mainCtrl'
+                controllerAs: 'mainCtrl',
+                resolve: {
+                    user: ['UserService', '$stateParams', function(UserService, $stateParams) {
+                        return UserService.getUser($stateParams.username);
+                    }]
+                }
             });
     }
 })();

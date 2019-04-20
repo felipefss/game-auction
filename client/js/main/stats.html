@@ -1,9 +1,12 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title text-center">Player Stats</h3>
-        <span class="glyphicon glyphicon-off pull-right" aria-hidden="true"></span>
+        <h3 class="panel-title text-center">
+            Player Stats
+            <i ng-click="$ctrl.logout()" class="pull-right fas fa-power-off" aria-hidden="true"></i>
+        </h3>
     </div> <!-- /.panel-heading -->
     <div class="panel-body">
-
+        <div>Name: <strong>{{$ctrl.player.name}}</strong></div>
+        <div>Coins: <strong>{{$ctrl.player.coins}}</strong></div>
     </div> <!-- /.panel-body -->
 </div> <!-- /.panel-default -->

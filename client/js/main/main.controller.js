@@ -2,10 +2,16 @@
     "use strict";
 
     angular.module('game')
-        .controller('GameController', GameController);
+        .controller('MainController', MainController);
 
-    GameController.$inject = [];
-    function GameController() {
-        var gameCtrl = this;
+    MainController.$inject = ['user'];
+    function MainController(user) {
+        var mainCtrl = this;
+        console.log(user);
+
+        mainCtrl.playerStats = {
+            name: user.name,
+            coins: user.coins
+        };
     }
 })();
