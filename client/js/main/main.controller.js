@@ -13,5 +13,7 @@
             name: user.name,
             coins: user.coins
         };
+
+        mainCtrl.inventory = user.inventory;
     }
 })();

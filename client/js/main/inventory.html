@@ -1,0 +1,25 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">Inventory</h3>
+    </div> <!-- /.panel-heading -->
+    <div class="panel-body list-group">
+        <div class="row list-group-item" ng-repeat="(item, amount) in $ctrl.items">
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img ng-src="img/{{item}}.png">
+                </div>
+                <div class="caption">
+                    <p class="text-center">{{item}}</p>
+                </div>
+            </div> <!-- /item ID -->
+            <div class="col-md-4 text-center">
+                <h4>Quantity</h4>
+                <h3>{{amount}}</h3>
+            </div>
+            <div class="col-md-4">
+                <img src="img/auction.png">
+                <button type="button" class="btn btn-primary">Auction</button>
+            </div>
+        </div> <!-- /.row -->
+    </div>
+</div> <!-- /.panel-primary -->

@@ -10,3 +10,7 @@ body {
 i.pull-right.fas.fa-power-off {
     cursor: pointer;
 }
+
+.thumbnail {
+    margin-bottom: 0;
+}
