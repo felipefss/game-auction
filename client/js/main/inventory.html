@@ -18,8 +18,41 @@
             </div>
             <div class="col-md-4">
                 <img src="img/auction.png">
-                <button type="button" class="btn btn-primary">Auction</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmAuction">Auction</button>
             </div>
         </div> <!-- /.row -->
-    </div>
+    </div> <!-- /.panel-body -->
 </div> <!-- /.panel-primary -->
+
+<div id="confirmAuction" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmAuctionLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="confirmAuctionLabel">Auction Config</h4>
+            </div> <!-- /.modal-header -->
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="quantityInput" class="col-sm-6 control-label">Quantity</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" id="quantityInput">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="minBidInput" class="col-sm-6 control-label">Minimum Bid</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" id="minBidInput">
+                        </div>
+                    </div>
+                </div> <!-- /.form-horizontal -->
+            </div> <!-- /.modal-body -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="">Start Auction</button>
+            </div> <!-- /.modal-footer -->
+        </div> <!-- /.modal-content -->
+      </div> <!-- /.modal-dialog -->
+</div> <!-- /.modal -->

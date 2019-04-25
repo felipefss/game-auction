@@ -14,3 +14,11 @@ i.pull-right.fas.fa-power-off {
 .thumbnail {
     margin-bottom: 0;
 }
+
+.place-bid {
+    display: flex;
+    justify-content: space-around;
+    height: 75px;
+    flex-flow: column;
+    width: 50%;
+}
