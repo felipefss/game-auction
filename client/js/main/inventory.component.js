@@ -3,30 +3,37 @@
         .component('inventory', {
             templateUrl: 'js/main/inventory.html',
             bindings: {
-                items: '<'
+                items: '<',
+                player: '<'
             },
             controller: InventoryController
         });
 
-    InventoryController.$inject = [];
-    function InventoryController() {
+    InventoryController.$inject = ['AuctionService'];
+    function InventoryController(AuctionService) {
         var $ctrl = this;
         $ctrl.auctionMinBid = 1;
 
         $('#confirmAuction').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
-            var itemName = button.data('item');
+            $ctrl.itemName = button.data('item');
 
             $ctrl.maxQty = $ctrl.items[itemName];
             $ctrl.auctionQuantity = $ctrl.maxQty;
 
             var modal = $(this);
-            modal.find('.modal-title').text('Auction for ' + itemName);
+            modal.find('.modal-title').text('Auction for ' + $ctrl.itemName);
             modal.find('#quantityInput').val($ctrl.maxQty);
         });
 
         $ctrl.startAuction = function () {
-            console.log($ctrl.auctionQuantity);
+            var obj = {
+                seller: $ctrl.player,
+                itemName: $ctrl.itemName,
+                quantity: $ctrl.auctionQuantity,
+                minBid: $ctrl.auctionMinBid
+            };
+            AuctionService.newAuction(obj);
         };
 
         $ctrl.controlLimit = function () {
