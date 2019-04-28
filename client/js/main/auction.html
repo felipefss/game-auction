@@ -20,13 +20,14 @@
                     <h3>{{$ctrl.auction.quantity}}</h3>
                 </div>
             </div> <!-- /.row -->
-            
-            <h4>Time left: <strong>{{$ctrl.duration}}</strong> seconds</h4>
+
+            <h4>Time left: <strong>{{$ctrl.auction.duration}}</strong> seconds</h4>
             <h4>{{$ctrl.bidText}}: <strong>{{$ctrl.winningBid}}</strong></h4>
-            
+
             <div class="place-bid center-block" ng-if="$ctrl.auction.seller != $ctrl.player">
-                <input type="number" class="form-control" min="{{$ctrl.winningBid}}" ng-value="$ctrl.bid">
-                <button type="button" class="btn btn-success">Place Bid</button>
+                <input type="number" class="form-control" min="{{$ctrl.winningBid}}" ng-value="$ctrl.bid"
+                    ng-change="$ctrl.controlLimit()">
+                <button type="button" class="btn btn-success" ng-click="$ctrl.placeBid()">Place Bid</button>
             </div>
         </div>
     </div> <!-- /.panel-body -->
