@@ -64,7 +64,8 @@ module.exports = (server) => {
     });
 
     router.post('/newAuction', (req, res) => {
-
+        manager.newAuction(req.body);
+        res.sendStatus(200);
     });
 
     // module.exports = router;

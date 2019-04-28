@@ -5,27 +5,27 @@
     <div class="panel-body">
         <h3 class="text-center" ng-if="!$ctrl.activeAuctions">No auctions at the moment</h3>
         <div ng-if="$ctrl.activeAuctions">
-            <h4>Seller: <strong>Seller name</strong></h4>
+            <h4>Seller: <strong>{{$ctrl.auction.seller}}</strong></h4>
             <div class="row">
                 <div class="col-md-6">
                     <div class="thumbnail">
-                        <img ng-src="img/{{item}}.png">
+                        <img ng-src="img/{{$ctrl.auction.item}}.png">
                     </div>
                     <div class="caption">
-                        <p class="text-center">Item</p>
+                        <p class="text-center">{{$ctrl.auction.item}}</p>
                     </div>
                 </div> <!-- /.col-md-6 -->
                 <div class="col-md-6 text-center">
                     <h4>Quantity</h4>
-                    <h3>10</h3>
+                    <h3>{{$ctrl.auction.quantity}}</h3>
                 </div>
             </div> <!-- /.row -->
             
-            <h4>Time left: <strong>10</strong> seconds</h4>
-            <h4>{{$ctrl.bidText}}: <strong>508</strong></h4>
+            <h4>Time left: <strong>{{$ctrl.duration}}</strong> seconds</h4>
+            <h4>{{$ctrl.bidText}}: <strong>{{$ctrl.winningBid}}</strong></h4>
             
-            <div class="place-bid center-block">
-                <input type="number" class="form-control" min="{{$ctrl.val}}" ng-value="$ctrl.val">
+            <div class="place-bid center-block" ng-if="$ctrl.auction.seller != $ctrl.player">
+                <input type="number" class="form-control" min="{{$ctrl.winningBid}}" ng-value="$ctrl.bid">
                 <button type="button" class="btn btn-success">Place Bid</button>
             </div>
         </div>

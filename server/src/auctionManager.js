@@ -3,42 +3,44 @@ module.exports = (server) => {
     const io = require('socket.io')(server);
 
     io.on('connection', (socket) => {
-        console.log('new connection');
+        console.log(`${new Date().toLocaleTimeString('pt-PT')}: new connection`);
     });
 
     const auctionQueue = [];
+    let auctionID = 0;
     let currentAuction = null;
     // let auctionStatus = false;
-    let timerID;
+    // let timerID;
 
     const newAuction = (details) => {
         // auctionQueue.push(new Auction(details));
         // if (auctionStatus == false) {
         //     startAuction();
         // }
-        currentAuction = new Auction(details);
+        currentAuction = new Auction(details, auctionID++);
+        startAuction();
     };
 
     const startAuction = () => {
         // currentAuction = auctionQueue[0];
         // auctionStatus = true;
-        timerID = setInterval(timer, 1000);
-
-        const timer = () => {
-            if (duration === 0) {
+        const timerID = setInterval(() => {
+            currentAuction.duration--;
+            if (currentAuction.duration === 0) {
                 clearInterval(timerID);
                 endAuction();
             }
-            let duration = currentAuction.duration--;
-        };
+        }, 1000);
+        console.log('begin auction')
+        io.sockets.emit('startAuction', currentAuction);
+
+        // const timer = ;
     };
 
-    const endAuction = () => { };
+    const endAuction = () => {
+        console.log('end of auction')
+    };
 
-    // module.exports = {
-    //     newAuction,
-    //     currentAuction
-    // };
     return {
         newAuction,
         currentAuction

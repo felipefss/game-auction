@@ -9,7 +9,8 @@
         var svc = this;
 
         svc.newAuction = function (item) {
-
+            $http.post('/newAuction', item)
+                .catch(function (reason) {});
         };
     }
 })();

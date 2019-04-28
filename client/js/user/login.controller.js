@@ -7,6 +7,12 @@
         var loginCtrl = this;
         loginCtrl.error = false;
 
+        loginCtrl.keyPress = function (event) {
+            if (loginCtrl.username && event.keyCode == 13) {
+                loginCtrl.submitForm();
+            }
+        };
+
         loginCtrl.submitForm = function () {
             UserService.login(loginCtrl.username)
                 .then(function (res) {

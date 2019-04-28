@@ -11,7 +11,7 @@
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" name="username" placeholder="Type a username..."
-                                ng-model="loginCtrl.username" required>
+                                ng-model="loginCtrl.username" ng-keypress="loginCtrl.keyPress($event)" required>
                             <p class="errorMsg" ng-if="loginForm.username.$invalid && loginForm.username.$touched">
                                 You must enter your username.
                             </p>

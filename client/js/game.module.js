@@ -1,9 +1,7 @@
 (function () {
     "use strict";
 
-    angular.module('game', ['ui.router'])
-        .config(config)
-        .constant('socket', io('http://localhost:3000'));
+    angular.module('game', ['ui.router']).config(config);
 
     config.$inject = ['$urlRouterProvider'];
     function config($urlRouterProvider) {

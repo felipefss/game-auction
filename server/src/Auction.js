@@ -1,10 +1,11 @@
 class Auction {
-    constructor(item) {
+    constructor(item, id) {
         this.item = item.itemName;
         this.quantity = item.quantity;
         this.minBid = item.minBid;
         this.seller = item.seller;
         this.winningBid = 0;
+        this.ID = id;
         this.bidder = '';
         this.duration = 90;
     }

@@ -18,7 +18,7 @@
             var button = $(event.relatedTarget);
             $ctrl.itemName = button.data('item');
 
-            $ctrl.maxQty = $ctrl.items[itemName];
+            $ctrl.maxQty = $ctrl.items[$ctrl.itemName];
             $ctrl.auctionQuantity = $ctrl.maxQty;
 
             var modal = $(this);
