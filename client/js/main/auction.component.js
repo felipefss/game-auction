@@ -24,7 +24,11 @@
             $ctrl.winningBid = data.minBid;
             $ctrl.bid = data.minBid;
             $ctrl.activeAuctions = true;
-            startTimer(data.duration);
+            timer = $interval(function () {
+                if ($ctrl.auction.duration != 0) {
+                    $ctrl.auction.duration--;
+                }
+            }, 1000);
         });
 
         socket.on('newBid', function (data) {
@@ -33,8 +37,12 @@
                 $ctrl.bidText = 'Winning bid';
             }
             $ctrl.auction.duration = data.duration;
-            $ctrl.winningBid = data.winningBid;
+            $ctrl.winningBid = data.bid;
             $ctrl.bid = $ctrl.winningBid;
+        });
+
+        socket.on('endAuction', function (data) {
+            $interval.cancel(timer);
         });
 
         $ctrl.controlLimit = function () {
@@ -51,11 +59,5 @@
             };
             socket.emit('placeBid', bidObj);
         };
-
-        function startTimer(repetitions) {
-            timer = $interval(function() {
-                $ctrl.auction.duration--;
-            }, 1000, repetitions);
-        }
     }
 })();

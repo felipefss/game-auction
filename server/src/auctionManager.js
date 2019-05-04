@@ -18,7 +18,7 @@ module.exports = (server) => {
                     currentAuction.duration = 10;
                 }
                 console.log(`New bid: Bidder -> ${bid.bidder}; Bid -> ${bid.bid}`);
-                socket.emit('newBid', currentAuction);
+                io.sockets.emit('newBid', currentAuction.details);
             }
         });
     });
@@ -37,6 +37,7 @@ module.exports = (server) => {
         // auctionStatus = true;
         const timerID = setInterval(() => {
             currentAuction.duration--;
+            console.log(currentAuction.duration);
             if (currentAuction.duration === 0) {
                 clearInterval(timerID);
                 endAuction();
@@ -44,12 +45,12 @@ module.exports = (server) => {
         }, 1000);
         console.log('begin auction')
         io.sockets.emit('startAuction', currentAuction);
-
-        // const timer = ;
     };
 
     const endAuction = () => {
+        io.sockets.emit('endAuction', currentAuction.details);
         console.log('end of auction')
+        console.log(`Winner ${currentAuction.details.buyer}`);
     };
 
     return {

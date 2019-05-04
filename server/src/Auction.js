@@ -7,16 +7,17 @@ class Auction {
         this.winningBid = 0;
         this.ID = id;
         this.bidder = '';
-        this.duration = 90;
+        this.duration = 20;
     }
 
-    get() {
+    get details() {
         return {
             itemName: this.item,
             quantity: this.quantity,
             seller: this.seller,
             buyer: this.bidder,
-            value: this.winningBid
+            bid: this.winningBid,
+            duration: this.duration
         };
     }
 
