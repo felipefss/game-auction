@@ -8,16 +8,25 @@
             controller: AuctionController
         });
 
-    AuctionController.$inject = ['socket', '$interval'];
-    function AuctionController(socket, $interval) {
+    AuctionController.$inject = ['socket', '$interval', '$scope'];
+    function AuctionController(socket, $interval, $scope) {
         var $ctrl = this;
 
-        $ctrl.activeAuctions = false;
-        $ctrl.bidText = 'Minimum bid';
-        // $ctrl.winningBid = 0;
-        // $ctrl.bid = 500;
-        var firstBid = false;
+        $ctrl.endAuction = false;
+        var minBidText = 'Minimum bid';
+        var firstBid;
         var timer;
+
+        // Initializes values
+        var init = function () {
+            $ctrl.activeAuctions = false;
+            $ctrl.bidText = minBidText;
+            firstBid = false;
+        };
+
+        init();
+
+        //TODO: On connect, send an event asking for the current auction, if exists
 
         socket.on('startAuction', function (data) {
             $ctrl.auction = data;
@@ -25,9 +34,7 @@
             $ctrl.bid = data.minBid;
             $ctrl.activeAuctions = true;
             timer = $interval(function () {
-                if ($ctrl.auction.duration != 0) {
-                    $ctrl.auction.duration--;
-                }
+                $ctrl.auction.duration--;
             }, 1000);
         });
 
@@ -38,11 +45,24 @@
             }
             $ctrl.auction.duration = data.duration;
             $ctrl.winningBid = data.bid;
-            $ctrl.bid = $ctrl.winningBid;
+            $ctrl.bid = $ctrl.winningBid + 1;
         });
 
         socket.on('endAuction', function (data) {
+            init();
             $interval.cancel(timer);
+            $scope.$apply();    // This is probably bad practice (change later)
+
+            if (data) {
+                $scope.$emit('endAuction', data.itemName);
+                $ctrl.endAuction = true;
+                $ctrl.winningBid = data.bid;
+                $ctrl.buyer = data.buyer;
+
+                $interval(function () {
+                    $ctrl.endAuction = false;
+                }, 10000, 1);
+            }
         });
 
         $ctrl.controlLimit = function () {

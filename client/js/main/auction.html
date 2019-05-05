@@ -3,7 +3,15 @@
         <h3 class="panel-title text-center">Auction</h3>
     </div> <!-- /.panel-heading -->
     <div class="panel-body">
-        <h3 class="text-center" ng-if="!$ctrl.activeAuctions">No auctions at the moment</h3>
+        <div ng-if="!$ctrl.activeAuctions">
+            <h3 class="text-center" ng-show="!$ctrl.endAuction">No auctions at the moment</h3>
+            <div class="text-center" ng-show="$ctrl.endAuction">
+                <h3>End of auction</h3>
+                <h3>Winning bid: ${{$ctrl.winningBid}}</h3>
+                <p>by</p>
+                <h3>{{$ctrl.buyer}}</h3>
+            </div>
+        </div>
         <div ng-if="$ctrl.activeAuctions">
             <h4>Seller: <strong>{{::$ctrl.auction.seller}}</strong></h4>
             <div class="row">
@@ -22,7 +30,7 @@
             </div> <!-- /.row -->
 
             <h4>Time left: <strong>{{$ctrl.auction.duration}}</strong> seconds</h4>
-            <h4>{{$ctrl.bidText}}: <strong>{{$ctrl.winningBid}}</strong></h4>
+            <h4>{{$ctrl.bidText}}: <strong>${{$ctrl.winningBid}}</strong></h4>
 
             <div class="place-bid center-block" ng-if="$ctrl.auction.seller != $ctrl.player">
                 <input type="number" class="form-control" min="{{$ctrl.winningBid}}" ng-change="$ctrl.controlLimit()"

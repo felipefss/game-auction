@@ -3,7 +3,7 @@
         <h3 class="panel-title text-center">Inventory</h3>
     </div> <!-- /.panel-heading -->
     <div class="panel-body list-group">
-        <div class="row list-group-item" ng-repeat="(item, amount) in $ctrl.items">
+        <div class="row list-group-item" ng-repeat="(item, amount) in $ctrl.items" ng-if="amount > 0">
             <div class="col-md-4">
                 <div class="thumbnail">
                     <img ng-src="img/{{item}}.png">
