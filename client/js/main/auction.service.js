@@ -10,7 +10,15 @@
 
         svc.newAuction = function (item) {
             $http.post('/newAuction', item)
-                .catch(function (reason) {});
+                .catch(function (reason) { });
+        };
+
+        svc.getOnGoingAuction = function () {
+            return $http.get('/getCurrentAuction')
+                .then(function (response) {
+                    return response.data;
+                })
+                .catch(function (reason) { });
         };
     }
 })();

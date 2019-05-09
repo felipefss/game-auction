@@ -8,8 +8,8 @@
             controller: AuctionController
         });
 
-    AuctionController.$inject = ['socket', '$interval', '$scope'];
-    function AuctionController(socket, $interval, $scope) {
+    AuctionController.$inject = ['socket', '$interval', '$scope', 'AuctionService'];
+    function AuctionController(socket, $interval, $scope, AuctionService) {
         var $ctrl = this;
 
         $ctrl.endAuction = false;
@@ -23,19 +23,36 @@
             $ctrl.bidText = minBidText;
             firstBid = false;
         };
-
         init();
 
-        //TODO: On connect, send an event asking for the current auction, if exists
-
-        socket.on('startAuction', function (data) {
-            $ctrl.auction = data;
-            $ctrl.winningBid = data.minBid;
-            $ctrl.bid = data.minBid;
+        var startAuction = function (auction) {
+            $ctrl.auction = auction;
+            $ctrl.winningBid = auction.minBid;
+            $ctrl.bid = auction.minBid;
             $ctrl.activeAuctions = true;
+
             timer = $interval(function () {
                 $ctrl.auction.duration--;
             }, 1000);
+        };
+
+        // On connect, send an event asking for the current auction
+        AuctionService.getOnGoingAuction()
+            .then(function (auction) {
+                if (auction && auction != '') {
+                    startAuction(auction);
+                }
+            })
+            .catch(function (reason) { });
+
+
+        socket.on('startAuction', function (data) {
+            startAuction(data);
+            // $ctrl.auction = data;
+            // $ctrl.winningBid = data.minBid;
+            // $ctrl.bid = data.minBid;
+            // $ctrl.activeAuctions = true;
+            // startTimer();
         });
 
         socket.on('newBid', function (data) {

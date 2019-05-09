@@ -33,6 +33,8 @@ module.exports = (server) => {
         startAuction();
     };
 
+    const getCurrentAuction = () => currentAuction;
+
     const startAuction = () => {
         // currentAuction = auctionQueue[0];
         // auctionStatus = true;
@@ -82,10 +84,12 @@ module.exports = (server) => {
         } else {
             io.sockets.emit('endAuction');
         }
+
+        currentAuction = null;
     };
 
     return {
         newAuction,
-        currentAuction
+        getCurrentAuction
     };
 };

@@ -68,6 +68,9 @@ module.exports = (server) => {
         res.sendStatus(200);
     });
 
-    // module.exports = router;
+    router.get('/getCurrentAuction', (req, res) => {
+        res.send(manager.getCurrentAuction());
+    });
+
     return router;
 };
