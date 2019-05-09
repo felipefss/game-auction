@@ -85,10 +85,10 @@ module.exports = (server) => {
 
         // Wait 10 seconds between auctions
         setTimeout(() => {
-            currentAuction = null;
             if (auctionQueue.length > 0) {
                 startAuction();
             } else {
+                currentAuction = null;
                 auctionStatus = false;
             }
         }, 10000);

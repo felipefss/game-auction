@@ -13,28 +13,28 @@
             </div>
         </div>
         <div ng-if="$ctrl.activeAuctions">
-            <h4>Seller: <strong>{{::$ctrl.auction.seller}}</strong></h4>
+            <h4>Seller: <strong>{{$ctrl.auction.seller}}</strong></h4>
             <div class="row">
                 <div class="col-md-6">
                     <div class="thumbnail">
                         <img ng-src="img/{{$ctrl.auction.item}}.png">
                     </div>
                     <div class="caption">
-                        <p class="text-center">{{::$ctrl.auction.item}}</p>
+                        <p class="text-center">{{$ctrl.auction.item}}</p>
                     </div>
                 </div> <!-- /.col-md-6 -->
                 <div class="col-md-6 text-center">
                     <h4>Quantity</h4>
-                    <h3>{{::$ctrl.auction.quantity}}</h3>
+                    <h3>{{$ctrl.auction.quantity}}</h3>
                 </div>
             </div> <!-- /.row -->
 
             <h4>Time left: <strong>{{$ctrl.auction.duration}}</strong> seconds</h4>
             <h4>{{$ctrl.bidText}}: <strong>${{$ctrl.winningBid}}</strong></h4>
 
-            <div class="place-bid center-block" ng-if="$ctrl.auction.seller != $ctrl.player">
-                <input type="number" class="form-control" min="{{$ctrl.winningBid}}" ng-change="$ctrl.controlLimit()"
-                    ng-model="$ctrl.bid">
+            <div class="place-bid center-block" ng-if="$ctrl.auction.seller != $ctrl.player.name">
+                <input type="number" class="form-control" min="{{$ctrl.winningBid}}" max="{{$ctrl.player.coins}}"
+                    ng-change="$ctrl.controlBidLimit()" ng-model="$ctrl.bid">
                 <button type="button" class="btn btn-success" ng-click="$ctrl.placeBid()">Place Bid</button>
             </div>
         </div>

@@ -79,16 +79,18 @@
             }
         });
 
-        $ctrl.controlLimit = function () {
+        $ctrl.controlBidLimit = function () {
             if ($ctrl.bid < $ctrl.winningBid) {
                 $ctrl.bid = $ctrl.winningBid;
+            } else if ($ctrl.bid > $ctrl.player.coins) {
+                $ctrl.bid = $ctrl.player.coins;
             }
         };
 
         $ctrl.placeBid = function () {
             var bidObj = {
                 id: $ctrl.auction.ID,
-                bidder: $ctrl.player,
+                bidder: $ctrl.player.name,
                 bid: $ctrl.bid
             };
             socket.emit('placeBid', bidObj);
