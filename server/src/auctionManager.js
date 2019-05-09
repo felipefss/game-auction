@@ -6,8 +6,7 @@ module.exports = (server) => {
     const auctionQueue = [];
     let auctionID = 0;
     let currentAuction = null;
-    // let auctionStatus = false;
-    // let timerID;
+    let auctionStatus = false;
 
     io.on('connection', (socket) => {
         console.log(`${new Date().toLocaleTimeString('pt-PT')}: new connection`);
@@ -25,19 +24,18 @@ module.exports = (server) => {
     });
 
     const newAuction = (details) => {
-        // auctionQueue.push(new Auction(details));
-        // if (auctionStatus == false) {
-        //     startAuction();
-        // }
-        currentAuction = new Auction(details, auctionID++);
-        startAuction();
+        auctionQueue.push(new Auction(details, auctionID++));
+
+        if (auctionStatus == false) {
+            startAuction();
+        }
     };
 
     const getCurrentAuction = () => currentAuction;
 
     const startAuction = () => {
-        // currentAuction = auctionQueue[0];
-        // auctionStatus = true;
+        currentAuction = auctionQueue.shift();
+        auctionStatus = true;
         const timerID = setInterval(() => {
             currentAuction.duration--;
             if (currentAuction.duration === 0) {
@@ -85,7 +83,15 @@ module.exports = (server) => {
             io.sockets.emit('endAuction');
         }
 
-        currentAuction = null;
+        // Wait 10 seconds between auctions
+        setTimeout(() => {
+            currentAuction = null;
+            if (auctionQueue.length > 0) {
+                startAuction();
+            } else {
+                auctionStatus = false;
+            }
+        }, 10000);
     };
 
     return {

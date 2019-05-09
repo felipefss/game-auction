@@ -43,16 +43,13 @@
                     startAuction(auction);
                 }
             })
-            .catch(function (reason) { });
+            .catch(function (reason) {
+                console.error(reason);
+            });
 
 
         socket.on('startAuction', function (data) {
             startAuction(data);
-            // $ctrl.auction = data;
-            // $ctrl.winningBid = data.minBid;
-            // $ctrl.bid = data.minBid;
-            // $ctrl.activeAuctions = true;
-            // startTimer();
         });
 
         socket.on('newBid', function (data) {
