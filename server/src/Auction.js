@@ -7,7 +7,7 @@ class Auction {
         this.winningBid = 0;
         this.ID = id;
         this.bidder = '';
-        this.duration = 20;
+        this.duration = 90;
     }
 
     get details() {

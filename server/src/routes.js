@@ -17,15 +17,6 @@ module.exports = (server) => {
     //     console.error(error);
     // });
 
-    /**
-     * Returns true if current session ID matches stored session ID; false otherwise.
-     * @param {Object} user - User object stored in DB
-     * @param {String} currentSession - Current session ID
-     */
-    function isValidSession(user, currentSession) {
-        return user.sessionId == currentSession;
-    }
-
     router.use(bodyParser.json());
     router.use(session({
         secret: 'speaknoevil',
@@ -66,10 +57,6 @@ module.exports = (server) => {
     router.post('/newAuction', (req, res) => {
         manager.newAuction(req.body);
         res.sendStatus(200);
-    });
-
-    router.get('/getCurrentAuction', (req, res) => {
-        res.send(manager.getCurrentAuction());
     });
 
     return router;
