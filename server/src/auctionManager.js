@@ -37,14 +37,13 @@ module.exports = (server) => {
         currentAuction = auctionQueue.shift();
         auctionStatus = true;
         const timerID = setInterval(() => {
-            currentAuction.duration--;
+            io.sockets.emit('countdown', { auction: currentAuction, duration: --currentAuction.duration });
             if (currentAuction.duration === 0) {
                 clearInterval(timerID);
                 endAuction().catch(reason => console.error(reason));
             }
         }, 1000);
         // console.log('begin auction');
-        io.sockets.emit('startAuction', currentAuction);
     };
 
     const endAuction = async () => {
@@ -90,6 +89,7 @@ module.exports = (server) => {
             } else {
                 currentAuction = null;
                 auctionStatus = false;
+                io.sockets.emit('noAuctions');
             }
         }, 10000);
     };

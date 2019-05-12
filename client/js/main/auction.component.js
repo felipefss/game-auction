@@ -8,8 +8,8 @@
             controller: AuctionController
         });
 
-    AuctionController.$inject = ['socket', '$interval', '$scope', 'AuctionService'];
-    function AuctionController(socket, $interval, $scope, AuctionService) {
+    AuctionController.$inject = ['socket', '$scope'];
+    function AuctionController(socket, $scope) {
         var $ctrl = this;
 
         $ctrl.endAuction = false;
@@ -30,26 +30,15 @@
             $ctrl.winningBid = auction.minBid;
             $ctrl.bid = auction.minBid;
             $ctrl.activeAuctions = true;
-
-            timer = $interval(function () {
-                $ctrl.auction.duration--;
-            }, 1000);
+            $ctrl.endAuction = false;
         };
 
-        // On connect, send an event asking for the current auction
-        AuctionService.getOnGoingAuction()
-            .then(function (auction) {
-                if (auction && auction != '') {
-                    startAuction(auction);
-                }
-            })
-            .catch(function (reason) {
-                console.error(reason);
-            });
+        socket.on('countdown', function (data) {
+            if ($ctrl.activeAuctions == false) {
+                startAuction(data.auction);
+            }
 
-
-        socket.on('startAuction', function (data) {
-            startAuction(data);
+            $ctrl.duration = data.duration;
         });
 
         socket.on('newBid', function (data) {
@@ -57,26 +46,24 @@
                 firstBid = true;
                 $ctrl.bidText = 'Winning bid';
             }
-            $ctrl.auction.duration = data.duration;
             $ctrl.winningBid = data.bid;
             $ctrl.bid = $ctrl.winningBid + 1;
         });
 
         socket.on('endAuction', function (data) {
             init();
-            $interval.cancel(timer);
-            $scope.$apply();    // This is probably bad practice (change later)
 
             if (data) {
-                $scope.$emit('endAuction', data.itemName);
+                $scope.$emit(data.buyer + ':endAuction', data.itemName);
+                $scope.$emit(data.seller + ':endAuction', data.itemName);
                 $ctrl.endAuction = true;
                 $ctrl.winningBid = data.bid;
                 $ctrl.buyer = data.buyer;
-
-                $interval(function () {
-                    $ctrl.endAuction = false;
-                }, 10000, 1);
             }
+        });
+
+        socket.on('noAuctions', function () {
+            $ctrl.endAuction = false;
         });
 
         $ctrl.controlBidLimit = function () {

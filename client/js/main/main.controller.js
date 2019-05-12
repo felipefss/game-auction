@@ -2,8 +2,7 @@
     "use strict";
 
     angular.module('game')
-        .controller('MainController', MainController)
-        .constant('socket', io('http://localhost:3000'));
+        .controller('MainController', MainController);
 
     MainController.$inject = ['user', '$scope', 'UserService'];
     function MainController(user, $scope, UserService) {
@@ -17,7 +16,7 @@
 
         mainCtrl.inventory = user.inventory;
 
-        $scope.$on('endAuction', function (ev) {
+        $scope.$on(user.name + ':endAuction', function (ev) {
             UserService.getUser(user.name).then(function (data) {
                 mainCtrl.playerStats.coins = data.coins;
                 mainCtrl.inventory = data.inventory;
