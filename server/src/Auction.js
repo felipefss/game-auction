@@ -3,8 +3,8 @@ class Auction {
         this.item = item.itemName;
         this.quantity = item.quantity;
         this.minBid = item.minBid;
+        this.winningBid = item.minBid;
         this.seller = item.seller;
-        this.winningBid = 0;
         this.ID = id;
         this.bidder = '';
         this.duration = 90;
@@ -12,11 +12,13 @@ class Auction {
 
     get details() {
         return {
+            ID: this.ID,
             itemName: this.item,
             quantity: this.quantity,
             seller: this.seller,
             buyer: this.bidder,
             bid: this.winningBid,
+            minBid: this.minBid,
             duration: this.duration
         };
     }

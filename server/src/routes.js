@@ -3,19 +3,8 @@ module.exports = (server) => {
     const db = require('./db');
     const manager = require('./auctionManager')(server);
     const router = require('express').Router();
-    // const session = require('express-session');
 
     router.use(bodyParser.json());
-    // router.use(session({
-    //     secret: 'speaknoevil',
-    //     cookie: {
-    //         maxAge: 1000 * 60 * 60 * 24 // 1 day
-    //     },
-    //     resave: false,
-    //     saveUninitialized: true
-    // }));
-
-    const activeSessions = {};
 
     router.post('/login', async (req, res) => {
         const userName = req.body.user;
@@ -25,12 +14,7 @@ module.exports = (server) => {
             if (!user) {
                 await db.createUser(userName);
             }
-            // req.session.regenerate(err => {
-            //     activeSessions[userName] = req.sessionID;
-            //     console.log(activeSessions);
-            //     res.cookie('session', req.sessionID);
-            //     res.sendStatus(200);
-            // });
+            res.sendStatus(200);
         } catch (e) {
             res.sendStatus(500);
         }

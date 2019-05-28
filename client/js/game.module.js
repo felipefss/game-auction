@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    angular.module('game', ['ui.router', 'ngCookies']).config(config);
+    angular.module('game', ['ui.router']).config(config);
 
     config.$inject = ['$urlRouterProvider'];
     function config($urlRouterProvider) {

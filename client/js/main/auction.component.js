@@ -33,12 +33,13 @@
 
         var startAuction = function (auction) {
             $ctrl.auction = auction;
-            $ctrl.winningBid = auction.minBid;
+            $ctrl.winningBid = auction.bid;
             $ctrl.bid = auction.minBid;
             $ctrl.activeAuctions = true;
             $ctrl.endAuction = false;
 
-            if (auction.winningBid > 0) {
+            if (auction.buyer != '') {
+                $ctrl.bid = auction.bid;
                 bidTextChange();
             }
         };
@@ -75,13 +76,14 @@
 
         $ctrl.controlBidLimit = function () {
             if ($ctrl.bid < $ctrl.winningBid) {
-                $ctrl.bid = $ctrl.winningBid;
+                $ctrl.bid = $ctrl.winningBid + 1;
             } else if ($ctrl.bid > $ctrl.player.coins) {
                 $ctrl.bid = $ctrl.player.coins;
             }
         };
 
         $ctrl.placeBid = function () {
+            console.log('teste')
             var bidObj = {
                 id: $ctrl.auction.ID,
                 bidder: $ctrl.player.name,

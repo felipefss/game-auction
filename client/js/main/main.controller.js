@@ -7,7 +7,6 @@
     MainController.$inject = ['user', '$scope', 'UserService'];
     function MainController(user, $scope, UserService) {
         var mainCtrl = this;
-        console.log(UserService.get());
 
         mainCtrl.playerStats = {
             name: user.name,
