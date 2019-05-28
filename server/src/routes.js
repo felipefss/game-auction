@@ -3,46 +3,34 @@ module.exports = (server) => {
     const db = require('./db');
     const manager = require('./auctionManager')(server);
     const router = require('express').Router();
-    const session = require('express-session');
-    // const MongoDBStore = require('connect-mongodb-session')(session);
-
-    // const store = new MongoDBStore({
-    //     uri: 'mongodb://localhost:27017',
-    //     databaseName: 'local',
-    //     collection: 'sessions'
-    // });
-
-    // // Catch errors
-    // store.on('error', function (error) {
-    //     console.error(error);
-    // });
+    // const session = require('express-session');
 
     router.use(bodyParser.json());
-    router.use(session({
-        secret: 'speaknoevil',
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
-        },
-        // store: store,
-        resave: true,
-        saveUninitialized: true
-    }));
+    // router.use(session({
+    //     secret: 'speaknoevil',
+    //     cookie: {
+    //         maxAge: 1000 * 60 * 60 * 24 // 1 day
+    //     },
+    //     resave: false,
+    //     saveUninitialized: true
+    // }));
 
-    // TODO: passar a SessionID em todo REST.
-    // Se tiver sido destroyed, ir pra tela de login
+    const activeSessions = {};
+
     router.post('/login', async (req, res) => {
         const userName = req.body.user;
 
         try {
             let user = await db.getUser(userName);
             if (!user) {
-                await db.createUser(userName, req.sessionID);
-            } else {
-                req.session.regenerate(err => {
-                    db.updateUser(userName, { sessionId: req.sessionID });
-                });
+                await db.createUser(userName);
             }
-            res.sendStatus(200);
+            // req.session.regenerate(err => {
+            //     activeSessions[userName] = req.sessionID;
+            //     console.log(activeSessions);
+            //     res.cookie('session', req.sessionID);
+            //     res.sendStatus(200);
+            // });
         } catch (e) {
             res.sendStatus(500);
         }

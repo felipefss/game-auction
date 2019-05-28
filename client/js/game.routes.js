@@ -20,7 +20,7 @@
                 controllerAs: 'mainCtrl',
                 resolve: {
                     user: ['UserService', '$stateParams', function(UserService, $stateParams) {
-                        return UserService.getUser($stateParams.username);
+                        return UserService.fetchUser($stateParams.username);
                     }]
                 }
             });

@@ -15,7 +15,6 @@
         $ctrl.endAuction = false;
         var minBidText = 'Minimum bid';
         var firstBid;
-        var timer;
 
         // Initializes values
         var init = function () {
@@ -25,12 +24,23 @@
         };
         init();
 
+        var bidTextChange = function () {
+            if (firstBid == false) {
+                firstBid = true;
+                $ctrl.bidText = 'Winning bid';
+            }
+        };
+
         var startAuction = function (auction) {
             $ctrl.auction = auction;
             $ctrl.winningBid = auction.minBid;
             $ctrl.bid = auction.minBid;
             $ctrl.activeAuctions = true;
             $ctrl.endAuction = false;
+
+            if (auction.winningBid > 0) {
+                bidTextChange();
+            }
         };
 
         socket.on('countdown', function (data) {
@@ -42,10 +52,7 @@
         });
 
         socket.on('newBid', function (data) {
-            if (firstBid == false) {
-                firstBid = true;
-                $ctrl.bidText = 'Winning bid';
-            }
+            bidTextChange();
             $ctrl.winningBid = data.bid;
             $ctrl.bid = $ctrl.winningBid + 1;
         });

@@ -8,13 +8,11 @@ const dbName = 'local';
  * Inserts a new user in the database.
  * 
  * @param {String} name - Name of the user to be created
- * @param {String} sessionId - ID of the current browser session
  * @returns {Promise}
  */
-function createUser(name, sessionId) {
+function createUser(name) {
     const playerData = {
         name,
-        sessionId,
         coins: 1000,
         inventory: {
             breads: 30,

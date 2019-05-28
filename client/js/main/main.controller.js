@@ -7,7 +7,7 @@
     MainController.$inject = ['user', '$scope', 'UserService'];
     function MainController(user, $scope, UserService) {
         var mainCtrl = this;
-        console.log(user);
+        console.log(UserService.get());
 
         mainCtrl.playerStats = {
             name: user.name,
@@ -17,7 +17,7 @@
         mainCtrl.inventory = user.inventory;
 
         $scope.$on(user.name + ':endAuction', function (ev) {
-            UserService.getUser(user.name).then(function (data) {
+            UserService.fetchUser(user.name).then(function (data) {
                 mainCtrl.playerStats.coins = data.coins;
                 mainCtrl.inventory = data.inventory;
             });

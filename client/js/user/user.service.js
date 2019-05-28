@@ -8,6 +8,12 @@
     function UserService($http) {
         var svc = this;
 
+        var user = {};
+
+        svc.get = function() {
+            return user;
+        };
+
         svc.login = function (userName) {
             return $http.post('/login', { user: userName })
                 .then(function (response) {
@@ -27,10 +33,10 @@
                 });
         };
 
-        svc.getUser = function (userName) {
+        svc.fetchUser = function (userName) {
             return $http.get('/getUser/' + userName)
                 .then(function (response) {
-                    var user = response.data;
+                    user = response.data;
                     return user;
                 })
                 .catch(function (reason) {
