@@ -1,0 +1,11 @@
+version: "3"
+services:
+  auction:
+    build: ../
+    image: auction-game:latest
+    ports:
+      - "3000:3000"
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
