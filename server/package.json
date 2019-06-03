@@ -4,12 +4,13 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "MONGOURL=mongodb://localhost:27017 node app.js"
   },
   "author": "Felipe Santos",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "mongodb": "^3.1.13",
     "socket.io": "^2.2.0"

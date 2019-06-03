@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert').strict;
 
-const url = 'mongodb://localhost:27017';
+const url = process.env.MONGOURL;
 const dbName = 'local';
 
 /**
