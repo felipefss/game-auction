@@ -1,4 +1,4 @@
-FROM node:current-alpine
+FROM node:lts-alpine
 
 WORKDIR /app/server
 
@@ -9,4 +9,4 @@ RUN npm install
 
 EXPOSE 3000
 
-CMD ["node", "app.js"]
+CMD node app.js

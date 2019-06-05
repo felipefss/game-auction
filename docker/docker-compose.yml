@@ -3,9 +3,15 @@ services:
   auction:
     build: ../
     image: auction-game:latest
+    environment:
+      - MONGOURL=mongodb://mongodb:27017
     ports:
       - "3000:3000"
   mongodb:
     image: mongo:latest
+    volumes:
+      - "mongoVol:/data/db"
     ports:
       - "27017:27017"
+volumes:
+  mongoVol:
