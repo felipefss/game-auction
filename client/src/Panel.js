@@ -1,19 +1,26 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import Header from './Header';
+import Body from './Body';
 import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import Header from './Header';
+import Paper from '@material-ui/core/Paper';
 
-export default function Panel() {
+export default function Panel(props) {
     const styles = {
-        paperStyle: {
-            width: 300
+        gridStyle: {
+            margin: 20
         }
     };
 
     return (
-        <Paper style={styles.paperStyle}>
-            <Header title="Title" />
-            <Divider />
-        </Paper>
+        <Grid container direction="row" justify="center" alignItems="center" style={styles.gridStyle}>
+            <Paper>
+                <Header title={props.title} />
+                <Divider component={Paper} />
+                <Body list={props.list}>
+                    {props.children}
+                </Body>
+            </Paper>
+        </Grid>
     );
 }
